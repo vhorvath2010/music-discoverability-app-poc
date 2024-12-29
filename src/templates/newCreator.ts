@@ -6,18 +6,33 @@ export function newCreatorTemplate() {
         <legend>New Creator</legend>
         <p>
           <label for="name">Name:</label>
-          <input name="name" id="name" type="text" placeholder="Your name here" required />
+          <input id="name" name="name" type="text" required />
         </p>
         <p>
           <label for="description">Description:</label>
-          <input name="description" id="description" type="text" placeholder="An awesome band!" />
+          <input id="description" name="description" ="text" />
         </p>
         <p>
           <label for="location">Location:</label>
-          <input name="location" id="location" type="" placeholder="City, State" required />
+          <input id="location" name="location" type="text" required />
         </p>
         <button>Create</button>
       </fieldset>
     </form>
-    <p><a href="/login">Back</a></p> `;
+    <p><a href="/login">Back</a></p>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=${Deno.env.get(
+        "MAPS_API_KEY"
+      )}&loading=async&libraries=places&callback=initAutocomplete"
+    ></script>
+    <script>
+      function initAutocomplete() {
+        const input = document.getElementById("location");
+        const options = {
+          types: ["locality", "sublocality", "neighborhood"],
+        };
+        const autocomplete = new google.maps.places.Autocomplete(input, options);
+      }
+    </script>`;
 }
