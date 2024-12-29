@@ -14,9 +14,9 @@ export function loginTemplate() {
           crossorigin="anonymous"
         ></script>
       </head>
-      <body>
+      <body hx-boost="true">
         <h1>Are you a creator or user?</h1>
-        <button>Creator</button>
+        <button hx-get="/creators" hx-target="closest body" hx-swap="innerHTML" hx-push-url="true">Creator</button>
         <button>User</button>
       </body>
     </html>`;
