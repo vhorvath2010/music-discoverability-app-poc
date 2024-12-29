@@ -30,7 +30,7 @@ app.post("/creators", async (c) => {
   }
   creators.push(new Creator({ name, location, description }));
   c.status(201);
-  return c.redirect("/");
+  return c.redirect("/creators");
 });
 app.get("/creators", (c) => c.html(creatorsTemplate(creators)));
 
