@@ -3,15 +3,18 @@ import { serveStatic } from "@hono/hono/deno";
 import { loginTemplate } from "./templates/login.ts";
 import { newCreatorTemplate } from "./templates/newCreator.ts";
 import { Creator } from "./creator.ts";
+import { creatorsTemplate } from "./templates/creators.ts";
 
 const app = new Hono();
 
-const creators = [];
+const creators: Creator[] = [];
 
 app.use("*", serveStatic({ root: "./public" }));
 app.get("/", (c) => c.redirect("/login"));
+
 app.get("/login", (c) => c.html(loginTemplate()));
 app.get("/login/creators", (c) => c.html(newCreatorTemplate()));
+
 app.post("/creators", async (c) => {
   const formData = await c.req.formData();
   const name = formData.get("name");
@@ -29,5 +32,6 @@ app.post("/creators", async (c) => {
   c.status(201);
   return c.redirect("/");
 });
+app.get("/creators", (c) => c.html(creatorsTemplate(creators)));
 
 Deno.serve(app.fetch);

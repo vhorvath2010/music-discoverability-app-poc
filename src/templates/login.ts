@@ -19,7 +19,7 @@ export function loginTemplate() {
         <button hx-get="/login/creators" hx-target="closest body" hx-swap="innerHTML" hx-push-url="true">
           Creator
         </button>
-        <button>User</button>
+        <button hx-get="/creators" hx-target="closest body" hx-swap="innerHTML" hx-push-url="true">User</button>
       </body>
     </html>`;
 }
