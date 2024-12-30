@@ -1,9 +1,9 @@
 import { Hono } from "@hono/hono";
 import { serveStatic } from "@hono/hono/deno";
-import { loginTemplate } from "./templates/login.ts";
-import { newCreatorTemplate } from "./templates/newCreator.ts";
 import { Creator } from "./creator.ts";
-import { creatorsTemplate } from "./templates/creators.ts";
+import { loginPage } from "./templates/pages/login.ts";
+import { newCreatorPage } from "./templates/pages/newCreator.ts";
+import { creatorsPage } from "./templates/pages/creators.ts";
 
 const app = new Hono();
 
@@ -12,8 +12,8 @@ const creators: Creator[] = [];
 app.use("*", serveStatic({ root: "./public" }));
 app.get("/", (c) => c.redirect("/login"));
 
-app.get("/login", (c) => c.html(loginTemplate()));
-app.get("/login/creators", (c) => c.html(newCreatorTemplate()));
+app.get("/login", (c) => c.html(loginPage()));
+app.get("/login/creators", (c) => c.html(newCreatorPage()));
 
 app.post("/creators", async (c) => {
   const formData = await c.req.formData();
@@ -32,6 +32,6 @@ app.post("/creators", async (c) => {
   c.status(201);
   return c.redirect("/creators");
 });
-app.get("/creators", (c) => c.html(creatorsTemplate(creators)));
+app.get("/creators", (c) => c.html(creatorsPage(creators)));
 
 Deno.serve(app.fetch);

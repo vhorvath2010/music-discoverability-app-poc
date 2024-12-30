@@ -1,7 +1,7 @@
 import { html } from "@hono/hono/html";
-import { wrapWithLayout } from "./layout.ts";
+import { wrapWithLayout } from "../layout.ts";
 
-export function newCreatorTemplate() {
+export function newCreatorPage() {
   return wrapWithLayout(html`<form action="/creators" method="POST">
       <fieldset>
         <legend>New Creator</legend>

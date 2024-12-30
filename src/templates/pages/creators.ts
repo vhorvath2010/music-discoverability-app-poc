@@ -1,8 +1,8 @@
 import { html } from "@hono/hono/html";
-import { Creator } from "../creator.ts";
-import { wrapWithLayout } from "./layout.ts";
+import { Creator } from "../../creator.ts";
+import { wrapWithLayout } from "../layout.ts";
 
-export function creatorsTemplate(creators: Creator[]) {
+export function creatorsPage(creators: Creator[]) {
   return wrapWithLayout(html`<h1>Creators</h1>
     <table border="1">
       <thead>
