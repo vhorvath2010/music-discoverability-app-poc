@@ -10,9 +10,14 @@ export class CreatorController {
     this.creatorRepository = creatorRepository;
   }
 
-  getCreators(c: Context) {
+  async getCreators(c: Context) {
     const query = c.req.query("query");
-    return c.html(creatorsTemplate({ creators: this.creatorRepository.search(query), query }));
+    return c.html(
+      creatorsTemplate({
+        creators: await this.creatorRepository.search(query),
+        query,
+      }),
+    );
   }
 
   async registerCreator(c: Context) {
@@ -24,11 +29,16 @@ export class CreatorController {
       c.status(400);
       return c.text("Error: A name and location are required");
     }
-    if (!(typeof name == "string") || !(typeof location == "string") || !(typeof description == "string")) {
+    if (
+      !(typeof name == "string") || !(typeof location == "string") ||
+      !(typeof description == "string")
+    ) {
       c.status(400);
       return c.text("Error: All input fields must be strings");
     }
-    this.creatorRepository.register(new Creator({ name, location, description }));
+    this.creatorRepository.register(
+      new Creator({ name, location, description }),
+    );
     c.status(201);
     return c.redirect("/creators");
   }

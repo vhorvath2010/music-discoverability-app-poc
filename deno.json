@@ -3,6 +3,7 @@
     "dev": "deno run --env-file --watch --allow-net --allow-read --allow-env src/app.ts"
   },
   "imports": {
-    "@hono/hono": "jsr:@hono/hono@^4.6.15"
+    "@hono/hono": "jsr:@hono/hono@^4.6.15",
+    "postgres": "npm:postgres@^3.4.5"
   }
 }
