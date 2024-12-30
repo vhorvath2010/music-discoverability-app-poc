@@ -1,8 +1,9 @@
 import { html } from "@hono/hono/html";
 import { Creator } from "../creator.ts";
+import { wrapWithLayout } from "./layout.ts";
 
 export function creatorsTemplate(creators: Creator[]) {
-  return html`<h1>Creators</h1>
+  return wrapWithLayout(html`<h1>Creators</h1>
     <table border="1">
       <thead>
         <tr>
@@ -21,5 +22,5 @@ export function creatorsTemplate(creators: Creator[]) {
             </tr>`
         )}
       </tbody>
-    </table>`;
+    </table>`);
 }

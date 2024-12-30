@@ -1,7 +1,8 @@
 import { html } from "@hono/hono/html";
+import { wrapWithLayout } from "./layout.ts";
 
 export function newCreatorTemplate() {
-  return html`<form action="/creators" method="POST">
+  return wrapWithLayout(html`<form action="/creators" method="POST">
       <fieldset>
         <legend>New Creator</legend>
         <p>
@@ -34,5 +35,5 @@ export function newCreatorTemplate() {
         };
         const autocomplete = new google.maps.places.Autocomplete(input, options);
       }
-    </script>`;
+    </script>`);
 }
