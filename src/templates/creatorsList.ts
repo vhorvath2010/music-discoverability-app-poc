@@ -1,5 +1,5 @@
 import { html } from "@hono/hono/html";
-import { Creator } from "../creator.ts";
+import { Creator } from "../business/creator.ts";
 
 export function creatorsListTemplate(creators: Creator[]) {
   return html`<table border="1">
