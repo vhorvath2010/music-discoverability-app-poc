@@ -1,6 +1,6 @@
 import { Context } from "@hono/hono";
 import { CreatorRepository } from "./business/creatorRepository.ts";
-import { creatorsListTemplate } from "./templates/creatorsList.ts";
+import { creatorsTemplate } from "./templates/creators.ts";
 import { Creator } from "./business/creator.ts";
 
 export class CreatorController {
@@ -11,7 +11,7 @@ export class CreatorController {
   }
 
   getCreators(c: Context) {
-    return c.html(creatorsListTemplate(this.creatorRepository.search()));
+    return c.html(creatorsTemplate(this.creatorRepository.search()));
   }
 
   async registerCreator(c: Context) {
@@ -29,6 +29,6 @@ export class CreatorController {
     }
     this.creatorRepository.register(new Creator({ name, location, description }));
     c.status(201);
-    return c.redirect("/home");
+    return c.redirect("/creators");
   }
 }
