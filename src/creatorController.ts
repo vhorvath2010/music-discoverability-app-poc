@@ -11,7 +11,8 @@ export class CreatorController {
   }
 
   getCreators(c: Context) {
-    return c.html(creatorsTemplate(this.creatorRepository.search()));
+    const query = c.req.query("query");
+    return c.html(creatorsTemplate({ creators: this.creatorRepository.search(query), query }));
   }
 
   async registerCreator(c: Context) {
