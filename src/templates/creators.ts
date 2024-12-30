@@ -22,5 +22,6 @@ export function creatorsTemplate(creators: Creator[]) {
             </tr>`
         )}
       </tbody>
-    </table>`);
+    </table>
+    <p><a href="/login">Back</a></p>`);
 }
