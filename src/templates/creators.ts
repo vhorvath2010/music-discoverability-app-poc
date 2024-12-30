@@ -10,7 +10,7 @@ interface CreatorsTemplateParams {
 export function creatorsTemplate({ creators, query = "" }: CreatorsTemplateParams) {
   return wrapWithLayout(html`<h1>Creators</h1>
     <p>
-      <label for="search">Search</label>
+      <label for="search">Search Creators:</label>
       <input
         type="search"
         name="query"
