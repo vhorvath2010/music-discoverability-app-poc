@@ -3,7 +3,8 @@ import { serveStatic } from "@hono/hono/deno";
 import { Creator } from "./creator.ts";
 import { loginPage } from "./templates/pages/login.ts";
 import { newCreatorPage } from "./templates/pages/newCreator.ts";
-import { creatorsPage } from "./templates/pages/creators.ts";
+import { creatorsListTemplate } from "./templates/creatorsList.ts";
+import { homePage } from "./templates/pages/home.ts";
 
 const app = new Hono();
 
@@ -15,6 +16,7 @@ app.get("/", (c) => c.redirect("/login"));
 app.get("/login", (c) => c.html(loginPage()));
 app.get("/login/creators", (c) => c.html(newCreatorPage()));
 
+app.get("/creators", (c) => c.html(creatorsListTemplate(creators)));
 app.post("/creators", async (c) => {
   const formData = await c.req.formData();
   const name = formData.get("name");
@@ -30,8 +32,9 @@ app.post("/creators", async (c) => {
   }
   creators.push(new Creator({ name, location, description }));
   c.status(201);
-  return c.redirect("/creators");
+  return c.redirect("/home");
 });
-app.get("/creators", (c) => c.html(creatorsPage(creators)));
+
+app.get("/home", (c) => c.html(homePage()));
 
 Deno.serve(app.fetch);
