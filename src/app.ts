@@ -1,11 +1,9 @@
 import { Hono } from "@hono/hono";
 import { serveStatic } from "@hono/hono/deno";
-import { Creator } from "./business/creator.ts";
 import { loginPage } from "./templates/pages/login.ts";
 import { newCreatorPage } from "./templates/pages/newCreator.ts";
-import { creatorsListTemplate } from "./templates/creatorsList.ts";
 import { homePage } from "./templates/pages/home.ts";
-import { creatorRepository } from "./dependencies.ts";
+import { creatorController } from "./dependencies.ts";
 
 const app = new Hono();
 
@@ -15,24 +13,8 @@ app.get("/", (c) => c.redirect("/login"));
 app.get("/login", (c) => c.html(loginPage()));
 app.get("/login/creators", (c) => c.html(newCreatorPage()));
 
-app.get("/creators", (c) => c.html(creatorsListTemplate(creatorRepository.search())));
-app.post("/creators", async (c) => {
-  const formData = await c.req.formData();
-  const name = formData.get("name");
-  const location = formData.get("location");
-  const description = formData.get("description");
-  if (!name || !location) {
-    c.status(400);
-    return c.text("Error: A name and location are required");
-  }
-  if (!(typeof name == "string") || !(typeof location == "string") || !(typeof description == "string")) {
-    c.status(400);
-    return c.text("Error: All input fields must be strings");
-  }
-  creatorRepository.register(new Creator({ name, location, description }));
-  c.status(201);
-  return c.redirect("/home");
-});
+app.get("/creators", (c) => creatorController.getCreators(c));
+app.post("/creators", (c) => creatorController.registerCreator(c));
 
 app.get("/home", (c) => c.html(homePage()));
 
