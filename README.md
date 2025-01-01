@@ -6,7 +6,4 @@ Mainly seeing if I like the HTMX, Deno, Hono stack
 
 ## Demo
 
-<video controls width="640" height="360">
-  <source src="./demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+https://github.com/user-attachments/assets/c659ccbf-e908-4591-8e35-f4c51af83060
