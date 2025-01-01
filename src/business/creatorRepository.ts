@@ -1,32 +1,40 @@
-import { sql } from "../dependencies.ts";
+import { client } from "../dependencies.ts";
 import { Creator } from "./creator.ts";
 
 export class CreatorRepository {
   async register(creator: Creator) {
-    await sql`
-      INSERT INTO creators ${sql(creator, "name", "description", "location")}
+    const query = `--sql
+      INSERT INTO creators (name, description, location)
+      VALUES ($1, $2, $3)
     `;
+    const values = [creator.name, creator.description, creator.location];
+    await client.query(query, values);
   }
 
   async search(query?: string): Promise<Creator[]> {
     if (!query) {
-      return await sql`
+      const result = await client.query(`--sql
         SELECT 
           name, description, location
-        from
+        FROM
           creators
-      `;
+      `);
+      return result.rows as Creator[];
     }
-    const lowerQuery = query.toLowerCase();
-    return await sql`
+    const lowerQuery = `%${query.toLowerCase()}%`;
+    const result = await client.query(
+      `--sql
       SELECT 
         name, description, location
       FROM 
         creators
       WHERE 
-        LOWER(name) LIKE ${"%" + lowerQuery + "%"} OR
-        LOWER(description) LIKE ${"%" + lowerQuery + "%"} OR
-        LOWER(location) LIKE ${"%" + lowerQuery + "%"}
-    `;
+        LOWER(name) LIKE $1 OR
+        LOWER(description) LIKE $1 OR
+        LOWER(location) LIKE $1
+    `,
+      [lowerQuery],
+    );
+    return result.rows as Creator[];
   }
 }

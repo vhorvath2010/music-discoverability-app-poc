@@ -1,7 +1,13 @@
 import { CreatorRepository } from "./business/creatorRepository.ts";
 import { CreatorController } from "./creatorController.ts";
-import postgres from "postgres";
+import pg from "pg";
 
 export const creatorRepository = new CreatorRepository();
 export const creatorController = new CreatorController(creatorRepository);
-export const sql = postgres(Deno.env.get("DATABASE_URL")!);
+
+const { Client } = pg;
+const client = new Client({
+  connectionString: Deno.env.get("DATABASE_URI"),
+});
+await client.connect();
+export { client };
